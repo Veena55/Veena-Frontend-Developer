@@ -13,3 +13,41 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 100vh;
+}
+
+/* Hide the default radio button */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Styling the checkmark */
+input[type="radio"]:checked::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  background-color: #FF5200;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+/* Optional: Change the border color when the radio is checked */
+input[type="radio"]:checked {
+  border-color: #FF5200;
+}
