@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import FoodItemsReducer from '../src/redux/slices/FoodItemsSlice';
-export default store = configureStore({
+export const store = configureStore({
     reducer: {
         food_list: FoodItemsReducer
     },
