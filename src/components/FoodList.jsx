@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { errorSelector, fetchFoodItems, filteredByAreaData, foodSelector, loadingSelector } from '../redux/slices/FoodItemsSlice'
 import { CgSpinner } from 'react-icons/cg'
 import axios from 'axios'
+import Modal from './Modal'
 
 const FoodList = () => {
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -80,12 +81,9 @@ const FoodList = () => {
                 {foodItemsList.map((item, index) => {
                     console.log(item);
                     return <FoodCard key={item.idMeal} item={item} />
-
                 })}
-                {/* <FoodCard />
-                <FoodCard />
-                <FoodCard /> */}
             </div>
+            <Modal />
         </div>
     )
 }
