@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 const Header = () => {
     return (
         <>
-            <div className="bg-white shadow-lg shadow-slate-200 p-2">
-                <div className="max-w-7xl mx-auto bg-white h-16 w-full flex justify-between items-center">
+            <div className="bg-white shadow-lg p-2 sticky top-0 z-50">
+                <div className="max-w-7xl mx-auto bg-white h-16 w-full flex justify-between items-center px-5 lg:p-0">
                     <div>
                         <a href='/'>
                             <SiSwiggy className="bg-themeBg text-white p-2 rounded-md" size={50} />

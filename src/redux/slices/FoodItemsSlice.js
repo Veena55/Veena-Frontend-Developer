@@ -4,16 +4,22 @@ import axios from "axios";
 const initialState = {
     foodItems: [],
     isLoading: false,
-    error: null
+    foodItemById: {},
+    error: null,
+    sortDirection: true, // true -> accending, false -> descending
+    isModalOpen: false, // handle modal open & close(by default close)
+    idToFilter: null,
+    pageNo: 0
 }
 console.log("jhhh", initialState);
 
 export const fetchFoodItems = createAsyncThunk('food_list/fetchFoodItems',
     async () => {
-        console.log("thunk");
+        console.log("thunk1");
         const { data } = await axios.get("https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian");
         return data.meals;
     });
+
 export const filteredByAreaData = createAsyncThunk('food_list/filteredByAreaData',
     async (areaToFilter) => {
         console.log("thunk2");
@@ -22,24 +28,53 @@ export const filteredByAreaData = createAsyncThunk('food_list/filteredByAreaData
         return data.meals;
     });
 
+export const filteredDataById = createAsyncThunk('food_list/filteredDataById',
+    async (idToFilter) => {
+        console.log("thunk3");
+        const { data } = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idToFilter}`);
+        console.log(data.meals);
+        return data.meals;
+    });
+/**
+ * {
+ * state: {
+ *  food_list: {
+ *      is_loading: false 
+ * }
+ * }
+ * }
+ */
 const FoodItemsSlice = createSlice({
     name: 'food_list',
     initialState,
     reducers: {
         // sort data in alphabatical order
         sortFoodItemsList: (state) => {
-            console.log("hi");
-            state.foodItems.sort((a, b) => {
-                if (a.strMeal < b.strMeal) return 1;  // a comes after b
-                if (a.strMeal > b.strMeal) return -1; // a comes before b
-                return 0; // They are equal
-            })
-            //Sorting Z->A (as there are already in asecnding order by default)
-            // state.foodItems.sort((a, b) => {
-            //     if (a.strMeal < b.strMeal) return 1; // a comes after b
-            //     if (a.strMeal > b.strMeal) return -1; // a comes before b
-            //     return 0; // They are equal
-            // });
+            // reversing the past direction
+            state.sortDirection = !state.sortDirection;
+            if (state.sortDirection)
+                state.foodItems.sort((a, b) => {
+                    if (a.strMeal < b.strMeal) return -1; // a comes before b
+                    if (a.strMeal > b.strMeal) return 1;  // a comes after b
+                    return 0; // They are equal
+                })
+            else
+                state.foodItems.sort((a, b) => {
+                    if (a.strMeal > b.strMeal) return -1; // a comes before b
+                    if (a.strMeal < b.strMeal) return 1;  // a comes after b
+                    return 0; // They are equal
+                })
+        },
+        // handleModal
+        handleModal: (state, action) => {
+            const { value, idMeal } = action.payload;
+            console.log(value, idMeal);
+            state.isModalOpen = value;
+            state.idToFilter = idMeal;
+        },
+        //handlePgination
+        fetchDataByPageNo: (state, action) => {
+            state.pageNo = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -58,7 +93,7 @@ const FoodItemsSlice = createSlice({
                 state.isLoading = false
                 state.error = action.error.message
             })
-            //Handle Filter by area
+            //Handle Filter By Area
             .addCase(filteredByAreaData.pending, (state) => {
                 state.isLoading = true
                 state.error = null
@@ -67,8 +102,21 @@ const FoodItemsSlice = createSlice({
                 state.isLoading = false
                 state.foodItems = action.payload
             })
-            .addCase(filteredByAreaData.rejected, (state) => {
+            .addCase(filteredByAreaData.rejected, (state, action) => {
                 state.isLoading = false
+                state.error = action.error.message
+            })
+            //Handle Filter By Id
+            .addCase(filteredDataById.pending, (state) => {
+                // state.isLoading = true
+                state.error = null
+            })
+            .addCase(filteredDataById.fulfilled, (state, action) => {
+                // state.isLoading = false
+                state.foodItemById = action.payload
+            })
+            .addCase(filteredDataById.rejected, (state, action) => {
+                // state.isLoading = false
                 state.error = action.error.message
             })
     }
@@ -76,12 +124,16 @@ const FoodItemsSlice = createSlice({
 
 //Action createors
 
-export const { sortFoodItemsList } = FoodItemsSlice.actions;
+export const { sortFoodItemsList, handleModal, fetchDataByPageNo } = FoodItemsSlice.actions;
 
 //Exporting the selectors
 export const foodSelector = (state) => state.food_list.foodItems;
+export const foodItemByIdSelector = (state) => state.food_list.foodItemById;
 export const loadingSelector = (state) => state.food_list.isLoading;
 export const errorSelector = (state) => state.food_list.error;
+export const sortDirectionSelector = (state) => state.food_list.sortDirection;
+export const isModalOpenSelector = (state) => state.food_list.isModalOpen;
+export const pageNoSelector = (state) => state.food_list.pageNo;
 
 // Exporting the reducer to be added to the store
 export default FoodItemsSlice.reducer;
