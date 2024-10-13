@@ -36,12 +36,12 @@ const FoodList = () => {
         getAllArea();
     }, []);
 
-    const getListOfFoodByArea = (e, areaToFilter) => {
-        if (e.target.value === "on") {
-            setArea(areaToFilter);
-            dispatch(filteredByAreaData(areaToFilter));
-            setIsDropdownVisible(false);
-        }
+    const getListOfFoodByArea = (areaToFilter) => {
+        // if (e.target.value === "on") {
+        setArea(areaToFilter);
+        dispatch(filteredByAreaData(areaToFilter));
+        setIsDropdownVisible(false);
+        // }
     };
 
     // Pagination handling

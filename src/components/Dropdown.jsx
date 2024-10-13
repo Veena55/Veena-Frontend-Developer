@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React from 'react'; // Add this line at the top of your Dropdown.jsx
 const Dropdown = ({ areas, getListOfFoodByArea }) => {
     return (
         <div className="shadow-lg rounded-xl w-[max-content] h-60 overflow-auto px-7 py-3 bg-white absolute z-20 top-3/4">
@@ -8,7 +7,7 @@ const Dropdown = ({ areas, getListOfFoodByArea }) => {
                     <input
                         type="radio"
                         name="area"
-                        onChange={(e) => getListOfFoodByArea(e, area.strArea)}
+                        onChange={() => getListOfFoodByArea(area.strArea)}
                     />
                     <label>{area.strArea}</label>
                 </div>
