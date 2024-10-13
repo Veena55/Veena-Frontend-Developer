@@ -11,7 +11,6 @@ const initialState = {
     idToFilter: null,
     pageNo: 0
 }
-console.log("jhhh", initialState);
 
 export const fetchFoodItems = createAsyncThunk('food_list/fetchFoodItems',
     async () => {

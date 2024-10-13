@@ -1,0 +1,21 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "jest": true // This tells ESLint to recognize Jest globals
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        // You can add your custom rules here if needed
+    }
+}
