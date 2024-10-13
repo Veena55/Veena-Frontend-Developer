@@ -51,3 +51,13 @@ input[type="radio"]:checked::before {
 input[type="radio"]:checked {
   border-color: #FF5200;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: #fbd0bc;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #FF5200;
+  border-radius: 50px;
+}
