@@ -64,7 +64,7 @@ const FoodList = () => {
     }
 
     return (
-        <div className="px-5 lg:px-5">
+        <div className="px-5 lg:px-0">
             <div>
                 <h1 className="font-bold text-2xl">Restaurants with online food delivery in {area}</h1>
             </div>
