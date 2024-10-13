@@ -10,6 +10,8 @@ import Modal from './Modal'; // A modal component to show detailed food info
 import axios from 'axios';
 
 const FoodList = () => {
+    console.log(pageNoSelector);
+
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [areaList, setAreaList] = useState([]);
     const [area, setArea] = useState('India');
