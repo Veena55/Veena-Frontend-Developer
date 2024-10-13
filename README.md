@@ -17,6 +17,8 @@ FoodList is a web application that allows users to browse and filter food items 
 ## Features
 
 - **Food Item Listing**: Displays a list of food items fetched from an API.
+- **Header with the Logo and Search Bar*
+- **Footer just to balance the bottom of the web page**
 - **Loading State**: Shows a loading spinner while data is being fetched.
 - **Error Handling**: Displays error messages when there are issues fetching data.
 - **Pagination**: Implements pagination to navigate through food items.
